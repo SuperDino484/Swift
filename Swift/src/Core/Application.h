@@ -2,6 +2,8 @@
 #include "Core/Core.h"
 #include "Events/Event.h"
 #include "Events/KeyEvents.h"
+#include "Events/EventSubscriber.h"
+#include "Events/EventHandler.h"
 
 namespace Swift {
 

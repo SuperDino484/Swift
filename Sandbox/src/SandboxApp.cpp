@@ -5,7 +5,8 @@ class Sandbox : public Swift::Application
 public:
 	Sandbox()
 	{
-		Swift::EventSubscriber::AddSubscription<Swift::KeyPressedEvent>(SF_BIND_FN(Sandbox::OnKeyEvent));
+		Swift::EventSubscriber::AddSubscription<Swift::KeyPressedEvent, Swift::EventPriority::High>(SF_BIND_FN(Sandbox::OnKeyEvent));
+		Swift::EventSubscriber::AddSubscription<Swift::KeyReleasedEvent, Swift::EventPriority::High>(SF_BIND_FN(Sandbox::OnKeyReleasedEvent));
 	}
 
 	~Sandbox()
@@ -13,9 +14,15 @@ public:
 
 	}
 
+	bool OnKeyReleasedEvent(Swift::KeyReleasedEvent& e)
+	{
+		SF_TRACE("KeyReleasedEvent called");
+		return false;
+	}
+
 	bool OnKeyEvent(Swift::KeyPressedEvent& e)
 	{
-		SF_INFO("{0} called from sandbox", e.GetEventType());
+		SF_TRACE("{0} called from Sandbox", e.GetEventType());
 		return false;
 	}
 

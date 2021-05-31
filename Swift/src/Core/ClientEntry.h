@@ -7,7 +7,6 @@ extern Swift::Application* Swift::CreateApplication();
 int main(int argc, char** argv)
 {
 	Swift::Log::Init();
-
 	auto app = Swift::CreateApplication();
 	app->Run();
 	delete app;

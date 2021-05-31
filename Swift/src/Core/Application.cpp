@@ -7,7 +7,8 @@ namespace Swift {
 	{
 		SF_CORE_INFO("Application Starting");
 		SetEventCallbackFunction(SF_BIND_FN(Application::OnEvent));
-		EventSubscriber::AddSubscription<KeyPressedEvent>(SF_BIND_FN(Application::OnKeyEvent));
+		EventSubscriber::AddSubscription<KeyPressedEvent, EventPriority::Low>(SF_BIND_FN(Application::OnKeyEvent));
+		EventSubscriber::AddSubscription<KeyPressedEvent, EventPriority::Low>(SF_BIND_FN(Application::OnKeyEvent));
 	}
 
 	Application::~Application()
@@ -18,7 +19,9 @@ namespace Swift {
 	void Application::Run()
 	{
 		KeyPressedEvent e(65);
-		m_EventCallbackFunction(e);
+		EventHandler::OnEvent(e);
+		KeyReleasedEvent e1(70);
+		EventHandler::OnEvent(e1);
 		while (true)
 		{
 
@@ -27,16 +30,15 @@ namespace Swift {
 
 	void Application::OnEvent(Event& e)
 	{
-		SF_CORE_TRACE("{0}", e.GetEventType());
+		//SF_CORE_TRACE("{0}", e.GetEventType());
 		//EventDispatcher dispatcher(e);
 		//dispatcher.DispatchEvent<KeyPressedEvent>(SF_BIND_FN(Application::OnKeyEvent));
-		EventHandler::HandleEvents<KeyPressedEvent>(e);
 	}
 
 
 	bool Application::OnKeyEvent(KeyPressedEvent& e)
 	{
-		SF_CORE_TRACE("KeyEventCall from {0}", e.GetEventType());
+		SF_CORE_TRACE("{0} called from Application", e.GetEventType());
 		return false;
 	}
 
